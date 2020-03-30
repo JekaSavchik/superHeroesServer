@@ -1,5 +1,5 @@
 exports.index = function(request, response){
-    response.send("Home page");
+    response.sendFile(__dirname + "/public/index.html");
 }
 
 exports.about = function(request, response){

@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2>Список супергероев</h2>
-    <table class="table table-condensed table-striped table-bordered">
+    <table class="table table-condensed table-bordered table-hover">
         <thead>
             <tr>
                 <th>Nic Name</th>
@@ -20,9 +20,11 @@
                 <th>catchPhrase</th>
                 <th>Images</th>
             </tr>
+        </thead>
+        <tbody> 
             {{#each superheroes}}
                 <tr>
-                    <td>{{this.nickName}}</td>
+                    <td>{{this.id}}</td>
                     <td>{{this.realName}}</td>
                     <td>{{this.originDescription}}</td>
                     <td>{{this.superpowers}}</td>
@@ -30,8 +32,6 @@
                     <td>IMAGES</td>
                 </tr>
             {{/each}}
-        </thead>
-        <tbody>
         </tbody>
     </table>
 </body>

@@ -14,6 +14,28 @@ exports.getSuperhero = function(request, response){
     });
 }
 
+exports.getSuperheroId = function(request, response){
+    const id = request.params.id;
+    console.log(id);
+    Superhero.findOne({_id: id}, function(err, superhero){
+        if(err){
+            console.log(err);
+            return response.sendStatus(400);
+        }
+        response.render("superhero.hbs", superhero);
+    });
+}
+
+exports.delSuperhero = function(request, response){
+    const id = request.params.id;
+    Superhero.findByIdAndDelete(id, function(err, superhero){
+        if(err){
+            return console.log(err);
+        }
+        response.redirect("/superheroes");
+    });
+}
+
 exports.postSuperhero =  function(request, response){
    
         if(!request.body){
