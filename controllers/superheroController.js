@@ -16,7 +16,6 @@ exports.getSuperhero = function(request, response){
 
 exports.getSuperheroId = function(request, response){
     const id = request.params.id;
-    console.log(id);
     Superhero.findOne({_id: id}, function(err, superhero){
         if(err){
             console.log(err);
@@ -74,6 +73,15 @@ exports.postSuperhero = function(request, response){
             }
             response.redirect("/superheroes");
         });
+}
+
+exports.postImage = function(request, response){
+    let filedata = request.file;
+    console.log(filedata);
+    if(!filedata)
+    return console.log("err");
+    else
+    response.render("superhero.hbs", superhero);
 }
 
 exports.putSuperhero = function(request, response){

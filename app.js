@@ -4,13 +4,34 @@ const app = express();
 const bodyParser = require("body-parser");
 const homeRouter = require("./routers/homeRouter.js");
 const superheroRouter = require("./routers/superheroRouter.js");
+const multer  = require("multer");
 
 app.set("view engine", "hbs");
 app.use(bodyParser.urlencoded({extended: false}));
+
+const storageConfig = multer.diskStorage({
+    destination: (req, file, cb) =>{
+        cb(null, "public/images");
+    },
+    filename: (req, file, cb) =>{
+        cb(null, file.originalname);
+    }
+});
+
 app.use(express.static(__dirname + "/public"));
+app.use(multer({storage:storageConfig}).single("filedata"));
 
 app.use("/superheroes", superheroRouter);
 app.use("/", homeRouter);
+app.post("/upload", function (req, res, next) {
+   
+    let filedata = req.file;
+    console.log(filedata);
+    if(!filedata)
+        res.send("Ошибка при загрузке файла");
+    else
+        res.send("Файл загружен");
+});
  
 app.use(function (request, response, next) {
     response.status(404).send("Not Found")

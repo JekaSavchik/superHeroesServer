@@ -8,4 +8,6 @@ superheroRouter.use("/superhero:id",superheroController.getSuperheroId);
 superheroRouter.use("/delete:id", superheroController.delSuperhero);
 superheroRouter.use("/", superheroController.getSuperhero);
 
+superheroRouter.use("/upload", superheroController.postImage);
+
 module.exports = superheroRouter;
