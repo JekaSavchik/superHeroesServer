@@ -2,11 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const bodyParser = require("body-parser");
-const homeRouter = require("./routers/homeRouter.js")
-const superheroRouter = require("./routers/superheroRouter.js")
+const homeRouter = require("./routers/homeRouter.js");
+const superheroRouter = require("./routers/superheroRouter.js");
 
 app.set("view engine", "hbs");
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(__dirname + "/public"));
 
 app.use("/superheroes", superheroRouter);
 app.use("/", homeRouter);

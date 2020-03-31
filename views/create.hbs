@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <h1>Create superheroes</h1>
-     <form action="postSuperhero" method="POST">
-        <label>nickName</label>
-        <input name="nickName" /><br><br>
-        <label>realName</label>
-        <input name="realName" /><br><br>
-        <label>originDescription</label>
-        <input name="originDescription" /><br><br>
-        <label>superpowers</label>
-        <input name="superpowers" /><br><br>
-        <label>catchPhrase</label>
-        <input name="catchPhrase" /><br><br>
 
-        <input type="submit" value="Отправить" />
-     </form>
+<body>
+    <div class="container">
+        <h1>Create superheroes</h1>
+        <form action="postSuperhero" method="POST">
+            <div class="form-row">
+                <div class="col">
+                    <label>nickName</label>
+                    <input class="form-control" placeholder="nickName" name="nickName" />
+                </div>
+                <div class="col">
+                    <label>realkName</label>
+                    <input class="form-control" placeholder="realName" name="realName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>originDescription</label>
+                <textarea class="form-control" rows="3" name="originDescription"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label>superpowers</label>
+                    <textarea class="form-control" rows="3" name="superpowers"></textarea>
+                </div>
+                <div class="col">
+                    <label>catchPhrase</label>
+                    <textarea class="form-control" rows="3" name="catchPhrase"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

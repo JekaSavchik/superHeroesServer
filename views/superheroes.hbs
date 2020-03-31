@@ -29,7 +29,11 @@
                     <td>{{this.originDescription}}</td>
                     <td>{{this.superpowers}}</td>
                     <td>{{this.catchPhrase}}</td>
-                    <td>IMAGES</td>
+                    <td>
+                        {{#each this.images}}
+                            <img src={{this}} alt={{this}} style="width: 150px;">
+                        {{/each}}
+                    </td>
                 </tr>
             {{/each}}
         </tbody>
