@@ -4,14 +4,14 @@ exports.createSuperhero = function (request, response) {
     response.render("create.hbs");
 }
 
-exports.getSuperhero = function (request, response) {
+exports.getSuperheroes = function (request, response) {
     Superhero.find({}, function (err, allSuperheroes) {
         if (err) {
             console.log(err);
             return response.sendStatus(400);
         }
         response.render("superheroes.hbs", {
-            superheroes: allSuperheroes
+            superheroes: allSuperheroes.map(hero => hero.toObject({ virtuals: true }))
         });
     });
 }
@@ -35,7 +35,7 @@ exports.delSuperhero = function (request, response) {
         if (err) {
             return console.log(err);
         }
-        response.redirect("/superheroes");
+        response.redirect("/");
     });
 }
 
@@ -83,7 +83,7 @@ exports.postSuperhero = function (request, response) {
         if (err) {
             return console.log(err);
         }
-        response.redirect("/superheroes/superhero" + superhero.id);
+        response.redirect("/superhero" + superhero.id);
     });
 }
 
@@ -99,7 +99,7 @@ exports.postImage = function (request, response) {
             superhero.images.push("/images/" + filedata.originalname);
             superhero.save();
         });
-        response.redirect("/superheroes/superhero" + request.body.id);
+        response.redirect("/superhero" + request.body.id);
     }
 }
 

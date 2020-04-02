@@ -2,11 +2,24 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const bodyParser = require("body-parser");
-const homeRouter = require("./routers/homeRouter.js");
+//const homeRouter = require("./routers/homeRouter.js");
 const superheroRouter = require("./routers/superheroRouter.js");
 const multer = require("multer");
 
+const expressHbs = require("express-handlebars");
+const hbs = require("hbs");
+
+app.engine("hbs", expressHbs(
+    {
+        layoutsDir: "views/layouts", 
+        defaultLayout: "layout",
+        extname: "hbs"
+    }
+));
+
 app.set("view engine", "hbs");
+
+hbs.registerPartials(__dirname + "/views/partials");////
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -37,8 +50,9 @@ app.use(multer({
     fileFilter: fileFilter
 }).array("filedata"));
 
-app.use("/superheroes", superheroRouter);
-app.use("/", homeRouter);
+app.use("/", superheroRouter);
+//app.use("/", homeRouter);
+
 // app.post("/upload", function (req, res, next) {
 
 //     let filedata = req.file;
