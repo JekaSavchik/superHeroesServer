@@ -4,44 +4,62 @@ const app = express();
 const bodyParser = require("body-parser");
 const homeRouter = require("./routers/homeRouter.js");
 const superheroRouter = require("./routers/superheroRouter.js");
-const multer  = require("multer");
+const multer = require("multer");
 
 app.set("view engine", "hbs");
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 const storageConfig = multer.diskStorage({
-    destination: (req, file, cb) =>{
+    destination: (req, file, cb) => {
         cb(null, "public/images");
     },
-    filename: (req, file, cb) =>{
+    filename: (req, file, cb) => {
         cb(null, file.originalname);
     }
 });
 
+const fileFilter = (req, file, cb) => {
+
+    if (file.mimetype === "image/png" ||
+        file.mimetype === "image/jpg" ||
+        file.mimetype === "image/jpeg") {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
 app.use(express.static(__dirname + "/public"));
-app.use(multer({storage:storageConfig}).single("filedata"));
+app.use(multer({
+    storage: storageConfig,
+    fileFilter: fileFilter
+}).array("filedata"));
 
 app.use("/superheroes", superheroRouter);
 app.use("/", homeRouter);
-app.post("/upload", function (req, res, next) {
-   
-    let filedata = req.file;
-    console.log(filedata);
-    if(!filedata)
-        res.send("Ошибка при загрузке файла");
-    else
-        res.send("Файл загружен");
-});
- 
+// app.post("/upload", function (req, res, next) {
+
+//     let filedata = req.file;
+//     console.log(filedata);
+//     if(!filedata)
+//         res.send("Ошибка при загрузке файла");
+//     else
+//         res.send("Файл загружен");
+// });
+
 app.use(function (request, response, next) {
     response.status(404).send("Not Found")
 });
- 
-mongoose.connect("mongodb://localhost:27017/superheroesdb", {useNewUrlParser: true}, function(err){
-    if(err){
+
+mongoose.connect("mongodb://localhost:27017/superheroesdb", {
+    useNewUrlParser: true
+}, function (err) {
+    if (err) {
         return console.log(err);
     }
-    app.listen(3000, function(){
+    app.listen(3000, function () {
         console.log("Start server!!!");
     });
     // const superhero = new Superhero({
@@ -140,7 +158,7 @@ mongoose.connect("mongodb://localhost:27017/superheroesdb", {useNewUrlParser: tr
 // });
 
 // app.post("/api/superheroes", jsonParser, function(request, response){
-   
+
 //     if(!request.body){
 //         return response.sendStatus(400);
 //     }
@@ -182,7 +200,7 @@ mongoose.connect("mongodb://localhost:27017/superheroesdb", {useNewUrlParser: tr
 // });
 
 // app.put("/api/superheroes", jsonParser, function(request, response){
-    
+
 //     if(!request.body){
 //         return response.sendStatus(400);
 //     }

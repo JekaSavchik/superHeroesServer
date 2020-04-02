@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -12,7 +13,7 @@
 <body>
     <div class="container">
         <h1>Create superheroes</h1>
-        <form action="postSuperhero" method="POST">
+        <form action="postSuperhero" method="POST" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="col">
                     <label>nickName</label>
@@ -36,6 +37,10 @@
                     <label>catchPhrase</label>
                     <textarea class="form-control" rows="3" name="catchPhrase"></textarea>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Example file input</label>
+                <input type="file" name="filedata" class="form-control-file" id="exampleFormControlFile1" multiple accept="image/*,image/jpeg">
             </div>
             <button type="submit" class="btn btn-primary">Sign in</button>
         </form>
