@@ -11,7 +11,9 @@ exports.getSuperheroes = function (request, response) {
             return response.sendStatus(400);
         }
         response.render("superheroes.hbs", {
-            superheroes: allSuperheroes.map(hero => hero.toObject({ virtuals: true }))
+            superheroes: allSuperheroes.map(hero => hero.toJSON({
+                virtuals: true
+            }))
         });
     });
 }
@@ -25,7 +27,10 @@ exports.getSuperheroId = function (request, response) {
             console.log(err);
             return response.sendStatus(400);
         }
-        response.render("superhero.hbs", superhero);
+        if (request._parsedOriginalUrl.path.match(/edit/i))
+            response.render("edit.hbs", superhero);
+        else
+            response.render("superhero.hbs", superhero);
     });
 }
 
@@ -41,7 +46,6 @@ exports.delSuperhero = function (request, response) {
 
 exports.postSuperhero = function (request, response) {
 
-    console.log("TEST");
     let filesdata = request.files;
     if (filesdata.lenght == 0)
         return response.status(400).send(`filesdata`);
@@ -87,52 +91,35 @@ exports.postSuperhero = function (request, response) {
     });
 }
 
-exports.postImage = function (request, response) {
-    let filedata = request.file;
-    let id = request.body.id;
-    if (!filedata)
-        return response.sendStatus(400);
-    else {
-        Superhero.findOne({
-            _id: id
-        }, function (err, superhero) {
-            superhero.images.push("/images/" + filedata.originalname);
-            superhero.save();
-        });
-        response.redirect("/superhero" + request.body.id);
-    }
-}
-
 exports.putSuperhero = function (request, response) {
 
     if (!request.body) {
         return response.sendStatus(400);
     }
+    let id = request.params.id;
 
     const heroNicName = request.body.nickName;
     const heroRealName = request.body.realName;
     const heroDescription = request.body.originDescription;
     const heroSuperPower = request.body.superpowers;
     const heroCatchPhrase = request.body.catchPhrase;
-    const heroImages = request.body.images;
 
-    const superhero = new Superhero({
+    const newSuperhero = {
         nickName: heroNicName,
         realName: heroRealName,
         originDescription: heroDescription,
         superpowers: heroSuperPower,
         catchPhrase: heroCatchPhrase,
-        images: heroImages
-    });
+    }
 
     Superhero.findOneAndUpdate({
         _id: id
-    }, superhero, {
+    }, newSuperhero, {
         new: true
     }, function (err, superhero) {
         if (err) {
             return console.log(err);
         }
-        response.render("superhero.hbs", superhero);
+        response.redirect("/superhero" + superhero.id);
     });
 }

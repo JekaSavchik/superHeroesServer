@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const bodyParser = require("body-parser");
-//const homeRouter = require("./routers/homeRouter.js");
 const superheroRouter = require("./routers/superheroRouter.js");
 const multer = require("multer");
-
 const expressHbs = require("express-handlebars");
 const hbs = require("hbs");
+const favicon = require("serve-favicon");
+const path = require('path');
 
 app.engine("hbs", expressHbs(
     {
@@ -18,6 +18,7 @@ app.engine("hbs", expressHbs(
 ));
 
 app.set("view engine", "hbs");
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 hbs.registerPartials(__dirname + "/views/partials");////
 app.use(bodyParser.urlencoded({

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="container">
+        <h1>Edit dissier</h1>
+        <form action="putSuperhero{{this.id}}" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="col">
+                    <label>nickName</label>
+                    <input class="form-control" name="nickName" value={{this.nickName}}>
+                </div>
+                <div class="col">
+                    <label>realName</label>
+                    <input class="form-control" name="realName" value={{this.realName}}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>originDescription</label>
+                <textarea class="form-control" rows="3" name="originDescription">{{this.originDescription}}</textarea>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label>superpowers</label>
+                    <textarea class="form-control" rows="3" name="superpowers">{{this.superpowers}}</textarea>
+                </div>
+                <div class="col">
+                    <label>catchPhrase</label>
+                    <textarea class="form-control" rows="3" name="catchPhrase">{{this.catchPhrase}}</textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+</div>
