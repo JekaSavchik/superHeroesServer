@@ -30,7 +30,7 @@
             <input type="file" id="fileMulti" class="form-control-file" name="filedata" multiple />
             <span id="outputMulti"></span>
         </div>
-        <button type="submit" class="btn btn-dark">Send</button>
+        <button type="submit" class="btn btn-dark">Save</button>
     </form>
 </div>
 
@@ -38,7 +38,7 @@
     var inp = document.getElementById('fileMulti');
     function handleFileSelectMulti(evt) {
         var files = evt.target.files; 
-        document.getElementById('outputMulti').innerHTML = "";
+        {{!-- document.getElementById('outputMulti').innerHTML = ""; --}}
         for (let i = 0, f; f = files[i]; i++) {
 
             var reader = new FileReader();

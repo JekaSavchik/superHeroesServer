@@ -1,12 +1,13 @@
-.myStyle {
-  float: left;
-  padding: 10px;
-  width: 300px;
-  text-align: justify;
+.cardMyStyle {
+  display: inline-block; 
+  text-align: center; 
+  margin: 10px;
+  border: 1px solid #000;
 }
 
 .carousel {
-  height: 500px !important;
+  height: 400px !important;
+  margin-bottom: 20px;
 }
 
 .carousel-inner img {
@@ -51,11 +52,9 @@
   padding-left: 0;
   padding-right: 0;
   font-size: 16px;
+  color: black;
 }
 
 .img-thumbnail {
   height: 150px;
-  border: 1px solid #000;
-  margin: 10px 5px 0 0;
 }
-

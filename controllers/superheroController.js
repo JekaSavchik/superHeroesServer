@@ -35,7 +35,7 @@ exports.getSuperheroId = function (request, response) {
         if (request._parsedOriginalUrl.path.match(/edit/i)) {
             response.render("edit.hbs", superhero);
         } else {
-            response.render("superhero.hbs", superhero);
+            response.render("dossier.hbs", superhero);
         }
     });
 }
@@ -82,7 +82,7 @@ exports.postSuperhero = function (request, response) {
         if (err) {
             return console.log(err);
         }
-        response.redirect("/superhero" + superhero.id);
+        response.redirect("/dossier" + superhero.id);
     });
 }
 
@@ -115,6 +115,6 @@ exports.putSuperhero = function (request, response) {
         if (err) {
             return console.log(err);
         }
-        response.redirect("/superhero" + superhero.id);
+        response.redirect("/dossier" + superhero.id);
     });
 }

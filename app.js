@@ -69,7 +69,9 @@ app.use(function (request, response, next) {
 });
 
 mongoose.connect("mongodb://localhost:27017/superheroesdb", {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
 }, function (err) {
     if (err) {
         return console.log(err);
@@ -77,15 +79,6 @@ mongoose.connect("mongodb://localhost:27017/superheroesdb", {
     app.listen(3000, function () {
         console.log("Start server!!!");
     });
-    // const superhero = new Superhero({
-    //     nickName: "Spider-Man",
-    //     realName: "Piter Parker",
-    //     originDescription: "an unusual spider bit him",
-    //     superpowers: "​Spider-Man received superpower, increased dexterity, “spider instinct”, as well as the ability to stay on steep surfaces and release cobwebs from his hands using a device of his own invention",
-    //     catchPhrase: "Friendly neighbor spiderman",
-    //     images: ["./public/images/spider_man.jpg", "/public/images/231px-AmazingSpiderMan50.jpg"]
-    // });
-
     // superhero.save(function(err){
     //     if(err){
     //         return console.log(err);
