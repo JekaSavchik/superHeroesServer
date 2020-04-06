@@ -1,19 +1,10 @@
-/* .card{
-  height: 400px;
-  width: 300px;
-}
-.card-img-top {
-  height: 100%;
-} */
-.myStyle{
+.myStyle {
   float: left;
-  margin: 20px;
-  /* padding-top: 10px; */
-  background-repeat: no-repeat;
+  padding: 10px;
   width: 300px;
-  max-height: 400px;
   text-align: justify;
 }
+
 .carousel {
   height: 500px !important;
 }
@@ -61,3 +52,10 @@
   padding-right: 0;
   font-size: 16px;
 }
+
+.img-thumbnail {
+  height: 150px;
+  border: 1px solid #000;
+  margin: 10px 5px 0 0;
+}
+

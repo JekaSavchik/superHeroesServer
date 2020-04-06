@@ -1,12 +1,13 @@
 
     <div class="container">
 
-        <h1 style="text-align: center" ;>Dossier</h1>
+        <h1 style="text-align: center; margin: 30px">Dossier</h1>
 
         <div class="container">
             <dl class="row">
                 <dt class="col-sm-3">Real name</dt>
-                <dd class="col-sm-9">{{this.nickName}}</dd>
+                <dd class="col-sm-8">{{this.nickName}}</dd>
+                <dd class="col-sm-1"><a class="btn btn-dark" href="/edit{{this._id}}" role="button"><img style="height: 20px;" src="/icons/round_create_white_18dp.png" alt="create"></a></dd>
 
                 <dt class="col-sm-3">Real name</dt>
                 <dd class="col-sm-9">{{this.realName}}</dd>

@@ -24,13 +24,14 @@ exports.getSuperheroId = function (request, response) {
         _id: id
     }, function (err, superhero) {
         if (err) {
-            console.log(err);
             return response.sendStatus(400);
         }
-        if (request._parsedOriginalUrl.path.match(/edit/i))
+        if (request._parsedOriginalUrl.path.match(/edit/i)){
             response.render("edit.hbs", superhero);
-        else
+        }
+        else{
             response.render("superhero.hbs", superhero);
+        }
     });
 }
 
@@ -52,7 +53,6 @@ exports.postSuperhero = function (request, response) {
     if (!request.body) {
         return response.status(400).send(`body`);
     }
-    console.log(filesdata);
     let heroNicName = request.body.nickName;
     let heroRealName = request.body.realName;
     let heroDescription = request.body.originDescription;

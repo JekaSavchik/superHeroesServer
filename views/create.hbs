@@ -27,9 +27,37 @@
         </div>
         <div class="form-group">
             <label for="exampleFormControlFile1">Select pictures</label>
-            <input type="file" name="filedata" class="form-control-file" id="exampleFormControlFile1" multiple
-                accept="image/*,image/jpeg">
+            <input type="file" id="fileMulti" class="form-control-file" name="filedata" multiple />
+            <span id="outputMulti"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-dark">Send</button>
     </form>
 </div>
+
+<script>
+    var inp = document.getElementById('fileMulti');
+    function handleFileSelectMulti(evt) {
+        var files = evt.target.files; 
+        document.getElementById('outputMulti').innerHTML = "";
+        for (let i = 0, f; f = files[i]; i++) {
+
+            var reader = new FileReader();
+
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="img-thumbnail" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'
+                    ].join('');
+                    document.getElementById('outputMulti').insertBefore(span, null);
+                };
+            })(f);
+
+            reader.readAsDataURL(f);
+        }
+    }
+
+    inp.addEventListener('change', handleFileSelectMulti, false);
+
+</script>
