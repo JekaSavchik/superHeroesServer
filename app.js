@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
 const bodyParser = require("body-parser");
 const superheroRouter = require("./routers/superheroRouter.js");
 const multer = require("multer");
@@ -8,6 +7,9 @@ const expressHbs = require("express-handlebars");
 const hbs = require("hbs");
 const favicon = require("serve-favicon");
 const path = require('path');
+
+const app = express();
+//var jsonParser = bodyParser.json();
 
 app.engine("hbs", expressHbs(
     {
@@ -45,7 +47,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({
     storage: storageConfig,
     fileFilter: fileFilter

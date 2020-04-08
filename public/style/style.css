@@ -55,6 +55,11 @@
   color: black;
 }
 
+.addBtn {
+  font-size: 16px;
+  color: black;
+}
+
 .img-thumbnail {
   height: 150px;
 }

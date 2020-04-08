@@ -118,3 +118,8 @@ exports.putSuperhero = function (request, response) {
         response.redirect("/dossier" + superhero.id);
     });
 }
+
+exports.putSuperheroImg = function (request, response) {
+    console.log(request.body);
+    response.redirect("/dossier" + request.params.id);
+}

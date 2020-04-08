@@ -108,16 +108,18 @@
             </div>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div class="card-body">
-                    <span>
+                    <div>
                         {{#each this.images}}
                         <div class="card cardMyStyle">
                             <img src={{this}} class="img-thumbnail" alt={{this}}>
                             <div>
-                                <button type="button" class="btn btn-outline-dark border-0">Del</button>
+                                <button type="button" class="btn btn-outline-dark border-0"
+                                    onclick="delImage(this)">Del</button>
                             </div>
                         </div>
                         {{/each}}
-                    </span>
+                    </div>
+                    <button type="button" class="btn btn-dark" id="send" onclick="submit()">Save</button>
                 </div>
             </div>
         </div>
@@ -128,7 +130,6 @@
     var inp = document.getElementById('fileMulti');
     function handleFileSelectMulti(evt) {
         var files = evt.target.files;
-        { { !--document.getElementById('outputMulti').innerHTML = ""; --} }
         for (let i = 0, f; f = files[i]; i++) {
 
             var reader = new FileReader();
@@ -149,5 +150,55 @@
     }
 
     inp.addEventListener('change', handleFileSelectMulti, false);
+
+    ///////  del block  ///////
+
+    let delImages = [];
+
+    function delImage(elem) {
+
+        let imgElem = elem.parentElement.previousElementSibling;
+        let regexp = /^.*?:\/\/.*?(?=\/|$)/;
+        let image = imgElem.src.replace(regexp, '');
+
+        if (!imgElem.hidden) {
+            imgElem.hidden = true;
+            elem.textContent = "Cancel";
+            delImages.push(image);
+        }
+        else {
+            imgElem.hidden = false;
+            elem.textContent = "Del";
+            delImages.splice(delImages.indexOf(image), 1);
+        }
+
+        console.log(delImages);
+    }
+    function submit() {
+
+        let address = window.location.pathname.replace('edit', 'putSuperheroImg');
+        
+        //let response = fetch(address, {
+        //    method: 'POST',
+        //    headers: {
+        //        'Content-Type': 'application/json;charset=utf-8'
+        //    },
+        //    body: JSON.stringify(delImages)
+        //});
+        //alert(JSON.stringify(delImages));
+        //console.log(response);
+        //let result = response.json();
+
+        $.ajax({
+                url: address,
+                contentType: "application/json",
+                method: "POST",
+                data: JSON.stringify(delImages),
+                success: function (x) {
+                   // reset();
+                   console.log(x);
+                }
+            });
+    }
 
 </script>
