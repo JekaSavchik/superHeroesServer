@@ -121,5 +121,6 @@ exports.putSuperhero = function (request, response) {
 
 exports.putSuperheroImg = function (request, response) {
     console.log(request.body);
-    response.redirect("/dossier" + request.params.id);
+    //response.redirect("/dossier" + request.params.id);
+    return response.status(200).send(`delete complit`);
 }
