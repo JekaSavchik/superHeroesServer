@@ -10,7 +10,8 @@ superheroRouter.use("/create", superheroController.createSuperhero);
 superheroRouter.use("/dossier:id",superheroController.getSuperheroId);
 superheroRouter.use("/edit:id",superheroController.getSuperheroId);
 superheroRouter.use("/delete:id", superheroController.delSuperhero);
-superheroRouter.post("/putSuperheroImg:id", jsonParser, superheroController.putSuperheroImg);
+superheroRouter.use("/addSuperheroImg:id", superheroController.addSuperheroImg);
+superheroRouter.post("/delSuperheroImg:id", jsonParser, superheroController.delSuperheroImg);
 superheroRouter.use("/putSuperhero:id", superheroController.putSuperhero);
 superheroRouter.use("/", superheroController.getSuperheroes);
 

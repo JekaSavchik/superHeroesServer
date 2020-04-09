@@ -1,4 +1,5 @@
 const Superhero = require("../model/superhero.js");
+const fs = require("fs");
 
 exports.createSuperhero = function (request, response) {
     response.render("create.hbs");
@@ -119,8 +120,57 @@ exports.putSuperhero = function (request, response) {
     });
 }
 
-exports.putSuperheroImg = function (request, response) {
-    console.log(request.body);
-    //response.redirect("/dossier" + request.params.id);
+exports.delSuperheroImg = function (request, response) {
+
+    let id = request.params.id;
+    let images = request.body;
+    console.log(images);
+    var newS;
+    Superhero.findOne({
+        _id: id
+    }, function (err, superhero) {
+        if (err) {
+            return response.sendStatus(400);
+        } else {
+            images.forEach((item) => {
+                superhero.images.splice(superhero.images.indexOf(item), 1);
+                fs.unlinkSync("./public" + item)
+            });
+
+            superhero.save(function (err) {
+                if (err) throw err;
+
+                console.log('Superhero updated successfully');
+            });
+        }
+    });
+    console.log(newS);
     return response.status(200).send(`delete complit`);
+}
+
+exports.addSuperheroImg = (request, response) => {
+
+    let id = request.params.id;
+    let filesdata = request.files;
+    if (filesdata.lenght == 0)
+        return response.status(400).send(`filesdata`);
+
+    Superhero.findOne({
+        _id: id
+    }, function (err, superhero) {
+        if (err) {
+            return response.sendStatus(400);
+        } else {
+            filesdata.forEach((item) => {
+                superhero.images.push("/images/" + item.originalname);
+            });
+
+            superhero.save(function (err) {
+                if (err) throw err;
+
+                response.redirect("/edit" + superhero.id)
+            });
+        }
+    });
+
 }
