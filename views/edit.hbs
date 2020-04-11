@@ -15,11 +15,11 @@
                         <div class="form-row">
                             <div class="col">
                                 <label>nickName</label>
-                                <input class="form-control" name="nickName" value={{this.nickName}}>
+                                <input class="form-control" name="nickName" value="{{this.nickName}}">
                             </div>
                             <div class="col">
                                 <label>realName</label>
-                                <input class="form-control" name="realName" value={{this.realName}}>
+                                <input class="form-control" name="realName" value="{{this.realName}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -146,18 +146,17 @@
     function submit() {
 
         let address = window.location.pathname.replace('edit', 'delSuperheroImg');
-        
-        $.ajax({
-                url: address,
-                contentType: "application/json",
-                method: "POST",
-                data: JSON.stringify(delImages),
-                success: function (x) {
-                   console.log(x);
-                   location.reload()
 
-                }
-            });
+        $.ajax({
+            url: address,
+            contentType: "application/json",
+            method: "POST",
+            data: JSON.stringify(delImages),
+            success: function (x) {
+                console.log(x);
+                location.reload()
+            }
+        });
     }
 
 </script>

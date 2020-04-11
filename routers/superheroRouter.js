@@ -13,6 +13,7 @@ superheroRouter.use("/delete:id", superheroController.delSuperhero);
 superheroRouter.use("/addSuperheroImg:id", superheroController.addSuperheroImg);
 superheroRouter.post("/delSuperheroImg:id", jsonParser, superheroController.delSuperheroImg);
 superheroRouter.use("/putSuperhero:id", superheroController.putSuperhero);
-superheroRouter.use("/", superheroController.getSuperheroes);
+superheroRouter.use("/:page", superheroController.getSuperheroesPage);
+superheroRouter.use("/", superheroController.getSuperheroesPage);
 
 module.exports = superheroRouter;

@@ -1,31 +1,73 @@
 const Superhero = require("../model/superhero.js");
 const fs = require("fs");
 
-exports.createSuperhero = function (request, response) {
+exports.createSuperhero = (request, response) => {
     response.render("create.hbs");
 }
 
-exports.getSuperheroes = function (request, response) {
-    Superhero.find({}, function (err, allSuperheroes) {
-        if (err) {
-            console.log(err);
-            return response.sendStatus(400);
-        }
-        let superheroes = [];
-        allSuperheroes.forEach((item) => {
-            superheroes.push({
-                id: item._id,
-                nickName: item.nickName,
-                image: item.images[0]
-            });
-        });
-        response.render("superheroes.hbs", {
-            superheroes: superheroes
-        });
-    });
-}
+// exports.getSuperheroes = (request, response) => {
+//     Superhero.find({}, function (err, allSuperheroes) {
+//         if (err) {
+//             console.log(err);
+//             return response.sendStatus(400);
+//         }
+//         let superheroes = [];
+//         allSuperheroes.forEach((item) => {
+//             superheroes.push({
+//                 id: item._id,
+//                 nickName: item.nickName,
+//                 image: item.images[0]
+//             });
+//         });
+//         response.render("superheroes.hbs", {
+//             superheroes: superheroes
+//         });
+//     });
+// }
 
-exports.getSuperheroId = function (request, response) {
+
+////////////////////////////
+exports.getSuperheroesPage = (req, res) => {
+
+    const perPage = 5; // results per page
+    const page = req.params.page > 0 ? req.params.page : 1; // Page
+    Superhero
+        .find({})
+        .limit(perPage)
+        .skip(perPage * page - perPage)
+        .exec(function (err, allSuperheroes) {
+            if (err) {
+                console.log(err);
+                return response.sendStatus(400);
+            }
+
+            Superhero
+                .countDocuments()
+                .exec(function (err, count) {
+                    let superheroes = [];
+                    let pages = [];
+                    for(let i = 1; i <= Math.ceil(count / perPage); i++){
+                        pages.push(i);
+                    }
+                    allSuperheroes.forEach((item) => {
+                        superheroes.push({
+                            id: item._id,
+                            nickName: item.nickName,
+                            image: item.images[0]
+                        });
+                    });
+                    res.render('superheroes.hbs', {
+                        superheroes: superheroes,
+                        page: page,
+                        pages: pages
+                    })
+                })
+        })
+};
+
+///////////////////////////
+
+exports.getSuperheroId = (request, response) => {
     const id = request.params.id;
     Superhero.findOne({
         _id: id
@@ -41,7 +83,7 @@ exports.getSuperheroId = function (request, response) {
     });
 }
 
-exports.delSuperhero = function (request, response) {
+exports.delSuperhero = (request, response) => {
     const id = request.params.id;
     Superhero.findByIdAndDelete(id, function (err, superhero) {
         if (err) {
@@ -51,7 +93,7 @@ exports.delSuperhero = function (request, response) {
     });
 }
 
-exports.postSuperhero = function (request, response) {
+exports.postSuperhero = (request, response) => {
 
     let filesdata = request.files;
     if (filesdata.lenght == 0)
@@ -87,7 +129,7 @@ exports.postSuperhero = function (request, response) {
     });
 }
 
-exports.putSuperhero = function (request, response) {
+exports.putSuperhero = (request, response) => {
 
     if (!request.body) {
         return response.sendStatus(400);
@@ -120,12 +162,11 @@ exports.putSuperhero = function (request, response) {
     });
 }
 
-exports.delSuperheroImg = function (request, response) {
+exports.delSuperheroImg = (request, response) => {
 
     let id = request.params.id;
     let images = request.body;
     console.log(images);
-    var newS;
     Superhero.findOne({
         _id: id
     }, function (err, superhero) {
@@ -144,7 +185,6 @@ exports.delSuperheroImg = function (request, response) {
             });
         }
     });
-    console.log(newS);
     return response.status(200).send(`delete complit`);
 }
 
@@ -168,9 +208,8 @@ exports.addSuperheroImg = (request, response) => {
             superhero.save(function (err) {
                 if (err) throw err;
 
-                response.redirect("/edit" + superhero.id)
+                response.redirect("/dossier" + superhero.id)
             });
         }
     });
-
 }

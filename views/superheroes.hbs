@@ -3,8 +3,8 @@
     <div class="card cardMyStyle">
         <img src={{this.image}} style="height: 200px;" alt="no photo">
         <div class="card-body px-0 py-1">
-            <button type="button" class="btn btn-outline-light border-0 text-dark" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <button type="button" class="btn btn-outline-light border-0 text-dark" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <h5>{{this.nickName}}</h5>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -15,4 +15,15 @@
         </div>
     </div>
     {{/each}}
+    <div class="fixed-bottom">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+                {{#each pages}}
+                <li class="page-item">
+                    <a class="page-link text-dark" href="/{{this}}">{{this}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </nav>
+    </div>
 </div>
