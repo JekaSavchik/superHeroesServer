@@ -9,20 +9,17 @@ const favicon = require("serve-favicon");
 const path = require('path');
 
 const app = express();
-//var jsonParser = bodyParser.json();
 
-app.engine("hbs", expressHbs(
-    {
-        layoutsDir: "views/layouts", 
-        defaultLayout: "layout",
-        extname: "hbs"
-    }
-));
+app.engine("hbs", expressHbs({
+    layoutsDir: "views/layouts",
+    defaultLayout: "layout",
+    extname: "hbs"
+}));
 
 app.set("view engine", "hbs");
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
-hbs.registerPartials(__dirname + "/views/partials");////
+hbs.registerPartials(__dirname + "/views/partials");
 app.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -54,23 +51,12 @@ app.use(multer({
 }).array("filedata"));
 
 app.use("/", superheroRouter);
-//app.use("/", homeRouter);
-
-// app.post("/upload", function (req, res, next) {
-
-//     let filedata = req.file;
-//     console.log(filedata);
-//     if(!filedata)
-//         res.send("Ошибка при загрузке файла");
-//     else
-//         res.send("Файл загружен");
-// });
 
 app.use(function (request, response, next) {
     response.status(404).send("Not Found")
 });
 
-mongoose.connect("mongodb://localhost:27017/superheroesdb", {
+mongoose.connect("mongodb://localhost:27017/heroesdb", {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
@@ -81,161 +67,4 @@ mongoose.connect("mongodb://localhost:27017/superheroesdb", {
     app.listen(3000, function () {
         console.log("Start server!!!");
     });
-    // superhero.save(function(err){
-    //     if(err){
-    //         return console.log(err);
-    //     }
-    //     console.log(superhero);
-    // });
 });
-
-
-
-// const Schema = mongoose.Schema;
-
-// const jsonParser = express.json();
-// const mongoose = require("mongoose");
-// const superheroScheme = new Schema({
-//     nickName: {
-//         type: String,
-//         required: true,
-//         minlength: 1
-//     },
-//     realName:{
-//         type: String,
-//         default: "Unknown"
-//     },
-//     originDescription: {
-//         type: String,
-//         default: "Non description"
-//     },
-//     superpowers: {
-//         type: String,
-//         default: "Unknown"
-//     },
-//     catchPhrase: {
-//         type: String,
-//         default: "Non"
-//     },
-//     images: [String]
-// });
-
-// const Superhero =  mongoose.model("Superhero", superheroScheme);
-
-// app.use(express.static(__dirname + "/public"));
-
-// mongoose.connect("mongodb://localhost:27017/superheroesdb", {useNewUrlParser: true}, function(err){
-//     if(err){
-//         return console.log(err);
-//     }
-//     app.listen(3000, function(){
-//         console.log("Start server!!!");
-//     });
-//     // const superhero = new Superhero({
-//     //     nickName: "Spider-Man",
-//     //     realName: "Piter Parker",
-//     //     originDescription: "an unusual spider bit him",
-//     //     superpowers: "​Spider-Man received superpower, increased dexterity, “spider instinct”, as well as the ability to stay on steep surfaces and release cobwebs from his hands using a device of his own invention",
-//     //     catchPhrase: "Friendly neighbor spiderman",
-//     //     images: ["./public/images/spider_man.jpg", "/public/images/231px-AmazingSpiderMan50.jpg"]
-//     // });
-
-//     // superhero.save(function(err){
-//     //     if(err){
-//     //         return console.log(err);
-//     //     }
-//     //     console.log(superhero);
-//     // });
-// });
-
-// app.get("/api/superheroes", function(request, response){
-//     Superhero.find({}, function(err, superheroes){
-//         if(err){
-//             return console.log(err);
-//         }
-//         response.send(superheroes);
-//     });
-// });
-
-// app.get("/api/superheroes:id", function(request, response){
-//     const id = request.params.id;
-//     Superhero.findOne({_id: id}, function(err, superhero){
-//         if(err){
-//             return console.log(err);
-//         }
-//         response.send(superhero);
-//     });
-// });
-
-// app.post("/api/superheroes", jsonParser, function(request, response){
-
-//     if(!request.body){
-//         return response.sendStatus(400);
-//     }
-
-//     const heroNicName = request.body.nickName;
-//     const heroRealName = request.body.realName;
-//     const heroDescription = request.body.originDescription;
-//     const heroSuperPower = request.body.superpowers;
-//     const heroCatchPhrase = request.body.catchPhrase;
-//     const heroImages = request.body.images;
-
-//     const superhero = new Superhero({
-//         nickName: heroNicName,
-//         realName: heroRealName,
-//         originDescription: heroDescription,
-//         superpowers: heroSuperPower,
-//         catchPhrase: heroCatchPhrase,
-//         images: heroImages
-//     });
-
-//     superhero.save(function(err){
-//         if(err){
-//             return console.log(err);
-//         }
-//         response.send(superhero);
-//     });
-// });
-
-// app.delete("/api/superheroes/:id", function(request,response){
-
-//     const id = request.params.id;
-//     Superhero.findByIdAndDelete(id, function(err, superhero){
-
-//         if(err){
-//             return console.log(err);
-//         }
-//         response.send(superhero);
-//     });
-// });
-
-// app.put("/api/superheroes", jsonParser, function(request, response){
-
-//     if(!request.body){
-//         return response.sendStatus(400);
-//     }
-
-//     const id = request.body.id;
-//     const heroNicName = request.body.nickName;
-//     const heroRealName = request.body.realName;
-//     const heroDescription = request.body.originDescription;
-//     const heroSuperPower = request.body.superpowers;
-//     const heroCatchPhrase = request.body.catchPhrase;
-//     const heroImages = request.body.images;
-
-//     const superhero = new Superhero({
-//         nickName: heroNicName,
-//         realName: heroRealName,
-//         originDescription: heroDescription,
-//         superpowers: heroSuperPower,
-//         catchPhrase: heroCatchPhrase,
-//         images: heroImages
-//     });
-
-//     Superhero.findOneAndUpdate({_id: id}, superhero, {new: true}, function(err, superhero){
-//         if(err){
-//             return console.log(err);
-//         }
-//         response.send(superhero);
-//     });
-// });

@@ -5,30 +5,9 @@ exports.createSuperhero = (request, response) => {
     response.render("create.hbs");
 }
 
-// exports.getSuperheroes = (request, response) => {
-//     Superhero.find({}, function (err, allSuperheroes) {
-//         if (err) {
-//             console.log(err);
-//             return response.sendStatus(400);
-//         }
-//         let superheroes = [];
-//         allSuperheroes.forEach((item) => {
-//             superheroes.push({
-//                 id: item._id,
-//                 nickName: item.nickName,
-//                 image: item.images[0]
-//             });
-//         });
-//         response.render("superheroes.hbs", {
-//             superheroes: superheroes
-//         });
-//     });
-// }
-
-
-////////////////////////////
 exports.getSuperheroesPage = (req, res) => {
 
+    presenceElements();
     const perPage = 5; // results per page
     const page = req.params.page > 0 ? req.params.page : 1; // Page
     Superhero
@@ -46,7 +25,7 @@ exports.getSuperheroesPage = (req, res) => {
                 .exec(function (err, count) {
                     let superheroes = [];
                     let pages = [];
-                    for(let i = 1; i <= Math.ceil(count / perPage); i++){
+                    for (let i = 1; i <= Math.ceil(count / perPage); i++) {
                         pages.push(i);
                     }
                     allSuperheroes.forEach((item) => {
@@ -63,9 +42,7 @@ exports.getSuperheroesPage = (req, res) => {
                     })
                 })
         })
-};
-
-///////////////////////////
+}
 
 exports.getSuperheroId = (request, response) => {
     const id = request.params.id;
@@ -87,7 +64,7 @@ exports.delSuperhero = (request, response) => {
     const id = request.params.id;
     Superhero.findByIdAndDelete(id, function (err, superhero) {
         if (err) {
-            return console.log(err);
+            return response.sendStatus(400);
         }
         response.redirect("/");
     });
@@ -97,9 +74,9 @@ exports.postSuperhero = (request, response) => {
 
     let filesdata = request.files;
     if (filesdata.lenght == 0)
-        return response.status(400).send(`filesdata`);
+        return response.status(400);
     if (!request.body) {
-        return response.status(400).send(`body`);
+        return response.status(400);
     }
     let heroNicName = request.body.nickName;
     let heroRealName = request.body.realName;
@@ -123,7 +100,7 @@ exports.postSuperhero = (request, response) => {
 
     superhero.save(function (err) {
         if (err) {
-            return console.log(err);
+            return response.sendStatus(400);
         }
         response.redirect("/dossier" + superhero.id);
     });
@@ -156,7 +133,7 @@ exports.putSuperhero = (request, response) => {
         new: true
     }, function (err, superhero) {
         if (err) {
-            return console.log(err);
+            return response.sendStatus(400);
         }
         response.redirect("/dossier" + superhero.id);
     });
@@ -179,7 +156,9 @@ exports.delSuperheroImg = (request, response) => {
             });
 
             superhero.save(function (err) {
-                if (err) throw err;
+                if (err){
+                    return response.sendStatus(400);
+                }
 
                 console.log('Superhero updated successfully');
             });
@@ -193,7 +172,7 @@ exports.addSuperheroImg = (request, response) => {
     let id = request.params.id;
     let filesdata = request.files;
     if (filesdata.lenght == 0)
-        return response.status(400).send(`filesdata`);
+        return response.status(400);
 
     Superhero.findOne({
         _id: id
@@ -206,10 +185,47 @@ exports.addSuperheroImg = (request, response) => {
             });
 
             superhero.save(function (err) {
-                if (err) throw err;
+                if (err) {
+                    return response.sendStatus(400);
+                }
 
                 response.redirect("/dossier" + superhero.id)
             });
         }
     });
+}
+
+function presenceElements() {
+    Superhero
+        .countDocuments()
+        .exec(function (err, count) {
+            if (err) {
+                return response.sendStatus(400);
+            }
+            if (!count) {
+                fillDb();
+            }
+        })
+}
+
+function fillDb() {
+    let content = fs.readFileSync("./model/superheroes.json", "utf8");
+    let heroes = JSON.parse(content);
+    heroes.forEach((item) => {
+        let superhero = new Superhero({
+            nickName: item.nickName,
+            realName: item.realName,
+            originDescription: item.originDescription,
+            superpowers: item.superpowers,
+            catchPhrase: item.catchPhrase,
+            images: item.images
+        });
+
+        superhero.save(function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("heroes");
+        })
+    })
 }

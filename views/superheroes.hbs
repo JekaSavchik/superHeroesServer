@@ -1,4 +1,4 @@
-<div class="container">
+<div class="text-center">
     {{#each superheroes}}
     <div class="card cardMyStyle">
         <img src={{this.image}} style="height: 200px;" alt="no photo">
@@ -15,15 +15,17 @@
         </div>
     </div>
     {{/each}}
-    <div class="fixed-bottom">
-        <nav aria-label="...">
-            <ul class="pagination justify-content-center">
-                {{#each pages}}
-                <li class="page-item">
-                    <a class="page-link text-dark" href="/{{this}}">{{this}}</a>
-                </li>
-                {{/each}}
-            </ul>
-        </nav>
-    </div>
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" aria-current="page">
+                <a class="page-link bg-dark text-white" href="#">Page {{page}}<span class="sr-only">(current)</span></a>
+            </li>
+            {{#each pages}}
+            <li class="page-item">
+                <a class="page-link text-dark" href="/{{this}}">{{this}}</a>
+            </li>
+            {{/each}}
+            
+        </ul>
+    </nav>
 </div>
