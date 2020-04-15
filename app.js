@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -55,8 +56,8 @@ app.use("/", superheroRouter);
 app.use(function (request, response, next) {
     response.status(404).send("Not Found")
 });
-
-mongoose.connect("mongodb://localhost:27017/heroesdb", {
+console.log(process.env.SH_DB_HOST);
+mongoose.connect(process.env.SH_DB_HOST, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
