@@ -56,7 +56,7 @@ app.use("/", superheroRouter);
 app.use(function (request, response, next) {
     response.status(404).send("Not Found")
 });
-console.log(process.env.SH_DB_HOST);
+
 mongoose.connect(process.env.SH_DB_HOST, {
     useNewUrlParser: true,
     useFindAndModify: false,
